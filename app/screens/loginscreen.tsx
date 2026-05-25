@@ -1,34 +1,19 @@
-import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { useState } from "react"
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, KeyboardAvoidingView, Platform } from "react-native"
+import { SymbolView } from "expo-symbols"
 
-type Props = {
-  onLogin: () => void;
-};
-
-export default function LoginScreen({ onLogin }: Props) {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [mostrarSenha, setMostrarSenha] = useState(false);
+export default function Login({ onLogin }: { onLogin: () => void }) {
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+  const [verSenha, setVerSenha] = useState(false)
 
   return (
-    <KeyboardAvoidingView
-      style={styles.tela}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <Text style={styles.titulo}>Entrar</Text>
+    <KeyboardAvoidingView style={s.tela} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+      <Text style={s.titulo}>Entrar</Text>
 
-      <View style={styles.inputBox}>
+      <View style={s.campo}>
         <TextInput
-          style={styles.input}
+          style={s.input}
           placeholder="Email"
           placeholderTextColor="#aaa"
           value={email}
@@ -38,62 +23,63 @@ export default function LoginScreen({ onLogin }: Props) {
         />
       </View>
 
-      <View style={styles.inputBox}>
+      <View style={s.campo}>
         <TextInput
-          style={[styles.input, { paddingRight: 48 }]}
+          style={[s.input, { paddingRight: 48 }]}
           placeholder="Senha"
           placeholderTextColor="#aaa"
           value={senha}
           onChangeText={setSenha}
-          secureTextEntry={!mostrarSenha}
+          secureTextEntry={!verSenha}
         />
-        <TouchableOpacity
-          style={styles.olho}
-          onPress={() => setMostrarSenha(!mostrarSenha)}
-        >
-          <Text style={styles.olhoTexto}>{mostrarSenha ? "👁" : "🙈"}</Text>
+        <TouchableOpacity style={s.olho} onPress={() => setVerSenha(!verSenha)}>
+          <SymbolView
+            name={verSenha
+              ? { ios: "eye", android: "visibility", web: "visibility" }
+              : { ios: "eye.slash", android: "visibility_off", web: "visibility_off" }}
+            size={22}
+            tintColor="#aaa"
+          />
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.linkEsqueceu}>
-        <Text style={styles.linkTexto}>Esqueceu sua senha?</Text>
+      <TouchableOpacity style={s.linkEsqueceu}>
+        <Text style={{ fontSize: 12, color: "#888" }}>Esqueceu sua senha?</Text>
       </TouchableOpacity>
 
-      <Text style={styles.ou}>ou</Text>
+      <Text style={s.ou}>ou continue com</Text>
 
-      <View style={styles.socialRow}>
-        <TouchableOpacity style={styles.socialBtn}>
-          <Text style={styles.socialTexto}>🔵 Facebook</Text>
+      <View style={s.socialRow}>
+        <TouchableOpacity style={s.socialBtn}>
+          <Image source={require("../assets/google.png")} style={s.socialIcon} resizeMode="contain" />
+          <Text style={s.socialLabel}>Google</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.socialBtn}>
-          <Text style={styles.socialTexto}>🔴 Google</Text>
+
+        <TouchableOpacity style={s.socialBtn}>
+          <Image source={require("../assets/facebook.png")} style={s.socialIcon} resizeMode="contain" />
+          <Text style={s.socialLabel}>Facebook</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.btnLogin} onPress={onLogin}>
-        <Text style={styles.btnLoginTexto}>Log In</Text>
+      <TouchableOpacity style={s.btnEntrar} onPress={onLogin}>
+        <Text style={{ color: "#fff", fontSize: 17, fontWeight: "600" }}>Log In</Text>
       </TouchableOpacity>
 
-      <View style={styles.cadastroRow}>
-        <Text style={styles.cadastroTexto}>Não tem uma conta? </Text>
+      <View style={{ flexDirection: "row", marginBottom: 30 }}>
+        <Text style={{ fontSize: 13, color: "#888" }}>Não tem uma conta? </Text>
         <TouchableOpacity>
-          <Text style={styles.cadastroLink}>Crie uma</Text>
+          <Text style={{ fontSize: 13, color: "#0079E3" }}>Crie uma</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.logoArea}>
-        <Image
-          source={require("../assets/logo.png")}
-          style={styles.logoImg}
-          resizeMode="contain"
-        />
-        <Text style={styles.logoNome}>2do-List</Text>
+      <View style={s.logo}>
+        <Image source={require("../assets/logo.png")} style={{ width: 110, height: 110 }} resizeMode="contain" />
       </View>
     </KeyboardAvoidingView>
-  );
+  )
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   tela: {
     flex: 1,
     backgroundColor: "#fff",
@@ -104,10 +90,10 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 30,
     fontWeight: "700",
-    color: "#4a90d9",
+    color: "#0079E3",
     marginBottom: 36,
   },
-  inputBox: {
+  campo: {
     width: "100%",
     marginBottom: 16,
     position: "relative",
@@ -115,7 +101,7 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     borderWidth: 1.5,
-    borderColor: "#4a90d9",
+    borderColor: "#0079E3",
     borderRadius: 10,
     padding: 14,
     fontSize: 15,
@@ -124,18 +110,11 @@ const styles = StyleSheet.create({
   olho: {
     position: "absolute",
     right: 14,
-    top: 14,
-  },
-  olhoTexto: {
-    fontSize: 18,
+    top: 13,
   },
   linkEsqueceu: {
     alignSelf: "flex-end",
-    marginBottom: 18,
-  },
-  linkTexto: {
-    fontSize: 12,
-    color: "#888",
+    marginBottom: 22,
   },
   ou: {
     color: "#aaa",
@@ -144,54 +123,41 @@ const styles = StyleSheet.create({
   },
   socialRow: {
     flexDirection: "row",
-    gap: 40,
+    gap: 14,
     marginBottom: 28,
+    width: "100%",
   },
   socialBtn: {
-    padding: 6,
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 13,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: "#e0e0e0",
+    backgroundColor: "#fff",
   },
-  socialTexto: {
-    fontSize: 15,
-    color: "#555",
+  socialIcon: {
+    width: 20,
+    height: 20,
   },
-  btnLogin: {
+  socialLabel: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333",
+  },
+  btnEntrar: {
     width: "100%",
-    backgroundColor: "#4a90d9",
+    backgroundColor: "#0079E3",
     borderRadius: 30,
     paddingVertical: 15,
     alignItems: "center",
     marginBottom: 18,
   },
-  btnLoginTexto: {
-    color: "#fff",
-    fontSize: 17,
-    fontWeight: "600",
-  },
-  cadastroRow: {
-    flexDirection: "row",
-    marginBottom: 30,
-  },
-  cadastroTexto: {
-    fontSize: 13,
-    color: "#888",
-  },
-  cadastroLink: {
-    fontSize: 13,
-    color: "#4a90d9",
-  },
-  logoArea: {
+  logo: {
     marginTop: "auto",
-    alignItems: "center",
     paddingBottom: 30,
-    gap: 6,
   },
-  logoImg: {
-    width: 72,
-    height: 72,
-  },
-  logoNome: {
-    fontSize: 14,
-    color: "#444",
-    fontWeight: "500",
-  },
-});
+})
