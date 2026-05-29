@@ -47,7 +47,7 @@ export default function Login({ onLogin }: { onLogin: () => void }) {
         <Text style={{ fontSize: 12, color: "#888" }}>Esqueceu sua senha?</Text>
       </TouchableOpacity>
 
-      <Text style={s.ou}>ou continue com</Text>
+      <Text style={s.ou}>ou</Text>
 
       <View style={s.socialRow}>
         <TouchableOpacity style={s.socialBtn}>

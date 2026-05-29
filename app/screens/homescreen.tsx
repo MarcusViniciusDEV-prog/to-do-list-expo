@@ -54,7 +54,7 @@ export default function Home() {
         <TextInput
           style={s.input}
           placeholder="Adicione aqui suas tarefas..."
-          placeholderTextColor="#66b2f0"
+          placeholderTextColor="#ffffff"
           value={texto}
           onChangeText={setTexto}
           onSubmitEditing={adicionar}
@@ -102,10 +102,10 @@ export default function Home() {
 
       <View style={s.navbar}>
         <TouchableOpacity style={{ padding: 4 }}>
-          <Text style={{ fontSize: 26 }}>📋</Text>
+          <Image source={require("../assets/checklist.svg")} style={s.vazioImg} resizeMode="contain" />
         </TouchableOpacity>
         <TouchableOpacity style={{ padding: 4 }}>
-          <Text style={{ fontSize: 26 }}>👤</Text>
+          <Image source={require("../assets/account.svg")} style={s.vazioImg} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -153,12 +153,12 @@ const s = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: "#e0f0fc",
+    backgroundColor: "#0079E3",
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 14,
-    color: "#333",
+    color: "#ffffff",
   },
   btnAdd: {
     backgroundColor: "#fff",
@@ -192,9 +192,8 @@ const s = StyleSheet.create({
     lineHeight: 28,
   },
   vazioImg: {
-    width: 120,
-    height: 120,
-    opacity: 0.5,
+    width: 40,
+    height: 40,
   },
   itemRow: {
     flexDirection: "row",
